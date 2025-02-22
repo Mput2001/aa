@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efek Mengetik ke Bawah dengan Background</title>
+    <style>
+        .audio-container {
+            text-align: top; /* Memusatkan elemen di dalam div */
+            top: 0px;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-image: url('depann.png'); /* Ganti dengan URL gambar */
+            background-size: cover; /* Agar gambar menutupi seluruh layar */
+            background-position: center;  /* Posisikan gambar di tengah */
+            background-repeat: no-repeat; /* Hindari pengulangan gambar */
+            background-position: 0px -780px; /* Atur posisi manual */
+        }
+        .slideshow-container:first-child {
+            position: absolute;
+            top: 50px;
+            left: 100px;
+        }
+
+        .slideshow-container:last-child {
+            position: absolute;
+            top: 50px;
+            right: 100px;
+        }
+        .slideshow-container {
+            display: inline-block;
+            margin: 50px;
+            position: relative;
+        }
+
+        img {
+            width: 190px; /* Sesuaikan ukuran */
+  
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100px;
+        }
+        .container1 {
+            position: relative;
+            width: 100%;
+            height: 100px;
+        }
+        .text1 {
+            font-size: 35px;
+            position: absolute;
+            font-weight: bold;
+            background-color: aliceblue;
+            top: -430px;
+            left: 550px;
+            color: black;
+        }
+        .typing {
+            font-size: 15px;
+            font-weight: bold;
+            padding: 5px;
+            margin: 50px 50px;
+            border-radius: 5px;
+            display: block;
+            width: fit-content;
+            white-space: pre-line;
+            text-align: justify;
+        }
+        /* Background warna berbeda untuk tiap baris */
+        .bg1 { background-color: pink; color: black; }
+        .bg2 { background-color: pink; color: black; }
+        .bg3 { background-color: pink; color: black; }
+        .bg4 { background-color: pink; color: black; }
+    </style>
+</head>
+<body>
+    
+    <div class="audio-container">
+        <audio controls>
+            <source src="lagu.mp3" type="audio/mpeg">
+        </audio>
+    <div class="container1">
+        <p class="text1">23-APRIL-2023</p>
+
+        <div class="container" id="text-container"></div>
+        <div class="container" id="text-container"></div>
+    <!-- Slideshow 1 -->
+    <div class="slideshow-container">
+        <img id="slide1" src="gambar.jpg">
+    </div>
+
+    <!-- Slideshow 2 -->
+    <div class="slideshow-container">
+        <img id="slide2" src="foto.jpg">
+    </div>
+
+    <script>
+        let images1 = ["gambar1.jpg", "gambar2.jpg", "gambar3.jpg", "gambar4.jpg", "gambar5.jpg", "gambar6.jpg"];
+        let images2 = ["foto1.jpg", "foto2.jpg", "foto3.jpg", "foto4.jpg", "foto5.jpg", "foto6.jpg"];
+        
+        let index1 = 0, index2 = 0;
+
+        function changeSlide1() {
+            index1 = (index1 + 1) % images1.length;
+            document.getElementById("slide1").src = images1[index1];
+        }
+
+        function changeSlide2() {
+            index2 = (index2 + 1) % images2.length;
+            document.getElementById("slide2").src = images2[index2];
+        }
+
+        setInterval(changeSlide1, 2000); // Ganti gambar setiap 2 detik (Slideshow 1)
+        setInterval(changeSlide2, 3000); // Ganti gambar setiap 3 detik (Slideshow 2)
+        // Daftar teks yang akan diketik per baris
+        const lines = [
+            { text: "Kamu\n\nKamu terpopuler di kepalaku.\nBahkan saat aku tidur\nKepalaku tetap sibuk olehmu.\nkarena kamu selalu singgah dalam mimpiku.\nKamu seperti sel aktif di otakku\nyang tak pernah berhenti kesana-kemari.\nSlebew Ah....", class: "bg1" },
+            { text: "", class: "bg2" },
+            { text: "", class: "bg3" },
+            { text: "", class: "bg4" }
+        ];
+
+        let index = 0; // Indeks baris saat ini
+
+        function typeWriter() {
+            if (index < lines.length) {
+                let newLine = document.createElement("div"); // Buat elemen baru untuk baris
+                newLine.classList.add("typing", lines[index].class); // Tambahkan kelas background
+                document.getElementById("text-container").appendChild(newLine);
+
+                let text = lines[index].text;
+                let charIndex = 0;
+
+                function typeCharacter() {
+                    if (charIndex < text.length) {
+                        newLine.innerHTML += text.charAt(charIndex); // Tambahkan karakter satu per satu
+                        charIndex++;
+                        setTimeout(typeCharacter, 50); // Kecepatan mengetik per karakter
+                    } else {
+                        index++;
+                        setTimeout(typeWriter, 500); // Jeda sebelum mengetik baris berikutnya
+                    }
+                }
+                typeCharacter();
+            }
+        }
+
+        typeWriter(); // Mulai efek mengetik
+    </script>
+</body>
+</html>
